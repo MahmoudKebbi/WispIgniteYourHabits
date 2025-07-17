@@ -1,6 +1,8 @@
 // middlewares/authenticateJWT.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Extend the Request interface to include the user property
 declare global {
@@ -28,6 +30,8 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
   }
 
   try {
+    console.log('Verifying token:', token);
+    console.log('Using secret:', process.env.JWT_SECRET);
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     req.user = decoded;
     console.log('Token successfully verified:', req.user);

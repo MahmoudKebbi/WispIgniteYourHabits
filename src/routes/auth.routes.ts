@@ -5,8 +5,8 @@ import { authenticateJWT } from '../middlewares/authenticateJWT';
 const router = Router();
 
 
-router.post('/login', AuthController.login);
-router.post('/signup', AuthController.signup);
+router.post('/login', AuthController.login); //tested done
+router.post('/signup', AuthController.signup); //tested done
 router.get('/me', authenticateJWT, AuthController.me);
 router.get('/verify-email', AuthController.verifyEmail);
 router.post('/resend-verification-email', AuthController.resendVerificationEmail);

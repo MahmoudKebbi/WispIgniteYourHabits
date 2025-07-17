@@ -23,11 +23,9 @@ export class AuthService {
       throw new Error('Email already in use');
     }
 
-    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
     const newUser = userRepo.create({
       email,
-      password_hash: hashedPassword,
+      password_hash: password,
       display_name: displayName,
       role: 'user', 
     });
@@ -39,6 +37,8 @@ export class AuthService {
     const verificationEntry = verificationRepo.create({
       user: newUser,
       token,
+      type: 'email_verification',
+      expires_at: new Date(Date.now() + 15 * 60 * 1000), // 15 minutes
     });
 
     await verificationRepo.save(verificationEntry);
