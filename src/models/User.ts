@@ -40,14 +40,13 @@ export class User {
   })
   role: UserRole;
 
-  // ✅ Email verification
+
   @Column({ default: false })
   email_verified: boolean;
 
   @Column({ type: 'uuid', nullable: true })
   email_verification_token?: string;
 
-  // ✅ Account status
   @Column({ default: true })
   is_active: boolean;
 

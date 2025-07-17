@@ -14,6 +14,7 @@ import { Quest } from '../models/Quest';
 import { Item } from '../models/Item';
 import { CoinTransaction } from '../models/CoinTransaction';
 import { Notification } from '../models/Notification';
+import { UserVerification } from '../models/UserVerification';
 dotenv.config();
 
 export const AppDataSource = new DataSource({
@@ -23,6 +24,6 @@ export const AppDataSource = new DataSource({
   username: process.env.WISP_DB_ADMIN_USERNAME,
   password: process.env.WISP_DB_ADMIN_PASSWORD,
   database: process.env.WISP_DB_NAME,
-  entities: [User, Source, Habit, FriendRequest, HabitEvent, XpTransaction, UserLevel, Quest, Item, Inventory, CoinTransaction, Notification],
+  entities: [User, UserVerification, Source, Habit, FriendRequest, HabitEvent, XpTransaction, UserLevel, Quest, Item, Inventory, CoinTransaction, Notification],
   synchronize: true,
 });

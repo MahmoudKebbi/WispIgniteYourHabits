@@ -50,6 +50,9 @@ export class Habit {
   @Column({ default: false })
   is_archived: boolean;
 
+  @Column({ type: 'int', array: true, nullable: true })
+  days_of_week?: number[];
+
   @CreateDateColumn({ type: 'timestamp with time zone' })
   created_at: Date;
 

@@ -2,8 +2,9 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import authRoutes from './routes/auth.route';
-import healthRoutes from './routes/health.route';
+import authRoutes from './routes/auth.routes';
+import healthRoutes from './routes/health.routes';
+import habitRoutes from './routes/habits.routes';
 
 
 
@@ -17,13 +18,16 @@ app.use(express.json());
 
 console.log('🚀 Middleware initialized')
 
-
-
 // === Routes ===;
-
+console.log('Mounting routes...');
 app.use('/api', healthRoutes);
+console.log('Health routes mounted on /api');
 
 app.use('/api/auth', authRoutes);
+console.log('Auth routes mounted on /api/auth');
+
+app.use('/api/habits', habitRoutes);
+console.log('Habit routes mounted on /api/habits');
 
 // === Fallback ===
 app.use((_, res) => res.status(404).json({ message: 'Not found' }));
