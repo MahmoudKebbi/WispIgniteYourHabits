@@ -21,10 +21,12 @@ export class AuthController {
   }
 static async login(req: Request, res: Response){
   try{
-  console.log('Login request received');
-  const { email, password } = req.body;
-  const result = await AuthService.signIn({ email, password });
-  console.log('Login successful:', result);
+    console.log('Login request received');
+    const { email, password } = req.body;
+    // Get IP address (works behind proxies too)
+    const ip = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || '';
+    const result = await AuthService.signIn({ email, password, ip });
+    console.log('Login successful:', result);
       return res.status(201).json(result);
     } catch (err: any) {
       console.error('Signup error:', err);
@@ -122,14 +124,19 @@ static async changePassword(req: Request, res: Response) {
 
 static async updateProfile(req: Request, res: Response) {
   try {
-    const user = req.user as { id: string } | null;
-    const userId = user?.id;
+    console.log('Update profile request received');
+    console.log('Request user:', req.user);
+    const user = req.user as { userId: string } | null;
+    const userId = user?.userId;
+    console.log('User ID:', userId);
     if (!userId) {
+      console.error('User ID is missing in request');
       return res.status(400).json({ error: 'User information is missing' });
     }
-    const { displayName, avatarUrl } = req.body;
+    const { displayName, avatarUrl, email } = req.body;
+    console.log('Profile update data:', { displayName, avatarUrl, email });
 
-    const result = await AuthService.updateProfile(userId, { displayName, avatarUrl });
+    const result = await AuthService.updateProfile(userId, { displayName, avatarUrl, email });
     return res.status(200).json(result);
   } catch (err: any) {
     console.error('Update profile error:', err);

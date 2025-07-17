@@ -33,7 +33,8 @@ export class AuthService {
     await userRepo.save(newUser);
 
     // Create a verification token (could also be UUID)
-    const token = generateToken({ userId: newUser.id }, '15m'); // expires in 15 min
+    const token = generateToken({ userId: newUser.id, displayName: newUser.display_name, email: newUser.email, verified: newUser.email_verified, role: newUser.role  }, '2h');
+
     const verificationEntry = verificationRepo.create({
       user: newUser,
       token,
@@ -48,7 +49,7 @@ export class AuthService {
     return { message: 'Signup successful. Please verify your email.' };
   }
 
-   static async signIn({ email, password }: { email: string; password: string }) {
+   static async signIn({ email, password, ip }: { email: string; password: string; ip?: string }) {
     const userRepo = AppDataSource.getRepository(User);
 
     const user = await userRepo.findOne({ where: { email } });
@@ -59,7 +60,6 @@ export class AuthService {
 
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
     console.log('Password match:', isPasswordValid);
-    console.log("Password in database unecnrypte")
     if (!isPasswordValid) {
       throw new Error('Invalid credentials');
     }
@@ -68,11 +68,20 @@ export class AuthService {
       throw new Error('Please verify your email before logging in.');
     }
 
-    const token = generateToken({ userId: user.id }, '2h');
+    // Update login so password hash does not change
+    await userRepo.update(user.id, { 
+      last_login_at: new Date(),
+      last_login_ip: ip || user.last_login_ip 
+    });
+
+
+
+    const token = generateToken({ userId: user.id, displayName: user.display_name, email: user.email, verified: user.email_verified, role: user.role  }, '2h');
+
+
 
     // return user details excluding password
     const { password_hash: _, ...userSafeData } = user;
-
     return {
       message: 'Login successful',
       token,
@@ -229,21 +238,47 @@ static async forgotPassword(email: string) {
 }
 
 
-static async updateProfile(userId: string, updates: { displayName?: string; avatarUrl?: string }) {
+static async updateProfile(
+  userId: string,
+  updates: { displayName?: string; avatarUrl?: string; email?: string }
+) {
   const userRepo = AppDataSource.getRepository(User);
+  const verificationRepo = AppDataSource.getRepository(UserVerification);
   const user = await userRepo.findOne({ where: { id: userId } });
 
   if (!user) throw new Error('User not found');
 
+  let emailChanged = false;
+
   if (updates.displayName !== undefined) {
     user.display_name = updates.displayName;
   }
-
   if (updates.avatarUrl !== undefined) {
     user.avatar_url = updates.avatarUrl;
   }
+  if (updates.email !== undefined && updates.email !== user.email) {
+    // Email changed
+    user.email = updates.email;
+    user.email_verified = false;
+    emailChanged = true;
+  }
 
   await userRepo.save(user);
+
+  // If email changed, send verification
+  if (emailChanged) {
+    // Remove old verifications
+    await verificationRepo.delete({ user: { id: user.id }, type: 'email_verification' });
+    const token = generateToken({ userId: user.id, email: user.email }, '2h');
+    const verificationEntry = verificationRepo.create({
+      user,
+      token,
+      type: 'email_verification',
+      expires_at: new Date(Date.now() + 15 * 60 * 1000),
+    });
+    await verificationRepo.save(verificationEntry);
+    await sendVerificationEmail(user.email, token);
+  }
 
   return {
     message: 'Profile updated successfully',
@@ -252,7 +287,9 @@ static async updateProfile(userId: string, updates: { displayName?: string; avat
       displayName: user.display_name,
       avatarUrl: user.avatar_url,
       email: user.email,
+      emailVerified: user.email_verified,
     },
+    ...(emailChanged && { emailVerificationSent: true }),
   };
 }
 
