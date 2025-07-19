@@ -11,9 +11,15 @@ import {
 import { User } from './User';
 
 export type HabitFrequency = 'daily' | 'weekly' | 'custom';
+export type Difficulty = 'very_easy' | 'easy' | 'medium' | 'hard' | 'epic';
+export type Category = 'health' | 'productivity' | 'self_care' | 'chores' | 'creativity';
 
 @Entity('habits')
 @Check(`"goal_per_period" >= 1`)
+@Check(`difficulty IS NULL OR difficulty IN ('very_easy', 'easy', 'medium', 'hard', 'epic')`)
+@Check(
+  `category IS NULL OR category IN ('health', 'productivity', 'self_care', 'chores', 'creativity')`
+)
 export class Habit {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -41,11 +47,25 @@ export class Habit {
   @Column({ type: 'int' })
   goal_per_period: number;
 
-  @Column({ type: 'int', default: 10 })
-  xp_reward: number;
+  @Column({
+    type: 'enum',
+    enum: ['very_easy', 'easy', 'medium', 'hard', 'epic'],
+    nullable: true,
+  })
+  difficulty?: Difficulty;
 
-  @Column({ type: 'int', default: 5 })
-  coin_reward: number;
+  @Column({
+    type: 'enum',
+    enum: ['health', 'productivity', 'self_care', 'chores', 'creativity'],
+    nullable: true,
+  })
+  category?: Category;
+
+  @Column({ type: 'int', nullable: true })
+  xp_reward?: number;
+
+  @Column({ type: 'int', nullable: true })
+  coin_reward?: number;
 
   @Column({ default: false })
   is_archived: boolean;

@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   console.log('Authenticating JWT...');
   const authHeader = req.headers.authorization;
 

@@ -18,7 +18,10 @@ export class Quest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.id, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'creator_id' })
   creator: User;
 

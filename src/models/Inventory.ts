@@ -17,11 +17,17 @@ export class Inventory {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.id, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Item, (item) => item.id, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => Item, (item) => item.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'item_id' })
   item: Item;
 

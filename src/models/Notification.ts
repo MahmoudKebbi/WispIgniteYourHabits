@@ -9,18 +9,17 @@ import {
 } from 'typeorm';
 import { User } from './User';
 
-export type NotificationType =
-  | 'friend_request'
-  | 'quest_update'
-  | 'habit_reminder'
-  | 'system';
+export type NotificationType = 'friend_request' | 'quest_update' | 'habit_reminder' | 'system';
 
 @Entity('notifications')
 export class Notification {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.id, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 

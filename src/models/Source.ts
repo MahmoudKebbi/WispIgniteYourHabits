@@ -12,13 +12,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './User';
 
-export type SourceType =
-  | 'web'
-  | 'mobile'
-  | 'iot'
-  | 'backend'
-  | 'internal'
-  | 'other';
+export type SourceType = 'web' | 'mobile' | 'iot' | 'backend' | 'internal' | 'other';
 
 @Entity('sources')
 export class Source {

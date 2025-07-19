@@ -1,10 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './User';
 import { Habit } from './Habit';
 import { Source } from './Source';
@@ -32,7 +26,10 @@ export class HabitEvent {
   @JoinColumn({ name: 'source_id' })
   source?: Source;
 
-  @Column({ type: 'timestamp with time zone', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp with time zone',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   completed_at: Date;
 
   @Column({ type: 'int', default: 10 })

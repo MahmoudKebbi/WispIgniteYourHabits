@@ -1,10 +1,7 @@
 import { z } from 'zod';
 
 // Base email validator with detailed errors
-const emailSchema = z
-  .string()
-  .nonempty('Email is required')
-  .email('Invalid email format');
+const emailSchema = z.string().nonempty('Email is required').email('Invalid email format');
 
 // Base password validator with complexity requirements
 const passwordSchema = z
@@ -75,11 +72,7 @@ export const authSchema = {
         .min(2, 'Display name must be at least 2 characters')
         .max(50, 'Display name cannot exceed 50 characters')
         .optional(),
-      avatarUrl: z
-        .string()
-        .url('Avatar URL must be a valid URL')
-        .optional()
-        .nullable(),
+      avatarUrl: z.string().url('Avatar URL must be a valid URL').optional().nullable(),
       email: emailSchema.optional(),
     }),
   }),

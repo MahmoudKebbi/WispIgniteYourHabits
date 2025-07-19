@@ -13,7 +13,10 @@ export class CoinTransaction {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.id, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
@@ -29,5 +32,3 @@ export class CoinTransaction {
   @CreateDateColumn({ type: 'timestamp with time zone' })
   created_at: Date;
 }
-
-

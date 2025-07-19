@@ -2,7 +2,6 @@ import { DataSource } from 'typeorm';
 import { User } from '../models/User';
 import { Source } from '../models/Source';
 
-
 import dotenv from 'dotenv';
 import { Habit } from '../models/Habit';
 import { FriendRequest } from '../models/FriendRequest';
@@ -24,6 +23,20 @@ export const AppDataSource = new DataSource({
   username: process.env.WISP_DB_ADMIN_USERNAME,
   password: process.env.WISP_DB_ADMIN_PASSWORD,
   database: process.env.WISP_DB_NAME,
-  entities: [User, UserVerification, Source, Habit, FriendRequest, HabitEvent, XpTransaction, UserLevel, Quest, Item, Inventory, CoinTransaction, Notification],
+  entities: [
+    User,
+    UserVerification,
+    Source,
+    Habit,
+    FriendRequest,
+    HabitEvent,
+    XpTransaction,
+    UserLevel,
+    Quest,
+    Item,
+    Inventory,
+    CoinTransaction,
+    Notification,
+  ],
   synchronize: true,
 });

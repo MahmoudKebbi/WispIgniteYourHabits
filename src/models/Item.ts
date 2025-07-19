@@ -1,10 +1,10 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-    UpdateDateColumn,
-    Unique,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Unique,
 } from 'typeorm';
 
 export type ItemType = 'consumable' | 'equipment' | 'badge' | 'currency';

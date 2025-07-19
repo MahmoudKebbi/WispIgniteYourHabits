@@ -40,7 +40,6 @@ export class User {
   })
   role: UserRole;
 
-
   @Column({ default: false })
   email_verified: boolean;
 
