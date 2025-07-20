@@ -1,5 +1,4 @@
-# ---- Build Stage ----
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -7,18 +6,9 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+
 RUN npm run build
 
-# ---- Production Stage ----
-FROM node:20-alpine AS production
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install --only=production
-
-COPY --from=builder /app/dist ./dist
-
-EXPOSE ${PORT:-4040}
+EXPOSE 4040
 
 CMD ["node", "dist/index.js"]
