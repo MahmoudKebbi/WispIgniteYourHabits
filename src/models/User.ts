@@ -52,7 +52,7 @@ export class User {
   @DeleteDateColumn({ nullable: true })
   deleted_at?: Date;
 
-  // ✅ Login metadata
+  
   @Column({ type: 'timestamp with time zone', nullable: true })
   last_login_at?: Date;
 
@@ -65,15 +65,22 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp with time zone' })
   updated_at: Date;
 
-  // 🔐 Hash password on insert/update
-  @BeforeInsert()
-  @BeforeUpdate()
-  async hashPassword() {
-    if (this.password_hash) {
-      const saltRounds = 12;
-      this.password_hash = await bcrypt.hash(this.password_hash, saltRounds);
-    }
-  }
+  // // 🔐 Hash password on insert/update
+  // @BeforeInsert()
+  // @BeforeUpdate()
+  // async hashPassword() {
+  //   // Only hash the password if it's a new record or if the password has been explicitly changed
+  //   if (this.password_hash && this.isPasswordChanged()) {
+  //     const saltRounds = 12;
+  //     this.password_hash = await bcrypt.hash(this.password_hash, saltRounds);
+  //   }
+  // }
+
+  // // Helper method to check if the password has been changed
+  // private isPasswordChanged(): boolean {
+  //   // Check if the password_hash field has been modified
+  //   return this.hasOwnProperty('password_hash');
+  // }
 
   // ✨ Normalize email before saving
   @BeforeInsert()

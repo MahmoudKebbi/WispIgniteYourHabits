@@ -1,0 +1,27 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const express_1 = tslib_1.__importDefault(require("express"));
+const cors_1 = tslib_1.__importDefault(require("cors"));
+const helmet_1 = tslib_1.__importDefault(require("helmet"));
+const auth_routes_1 = tslib_1.__importDefault(require("./routes/auth.routes"));
+const health_routes_1 = tslib_1.__importDefault(require("./routes/health.routes"));
+const habits_routes_1 = tslib_1.__importDefault(require("./routes/habits.routes"));
+const coinXp_routes_1 = tslib_1.__importDefault(require("./routes/coinXp.routes"));
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use((0, helmet_1.default)());
+app.use(express_1.default.json());
+console.log('🚀 Middleware initialized');
+console.log('Mounting routes...');
+app.use('/api', health_routes_1.default);
+console.log('Health routes mounted on /api');
+app.use('/api/auth', auth_routes_1.default);
+console.log('Auth routes mounted on /api/auth');
+app.use('/api/habits', habits_routes_1.default);
+console.log('Habit routes mounted on /api/habits');
+app.use('/api/wallet', coinXp_routes_1.default);
+console.log('Coin and XP routes mounted on /api/wallet');
+app.use((_, res) => res.status(404).json({ message: 'Not found' }));
+exports.default = app;
+//# sourceMappingURL=app.js.map

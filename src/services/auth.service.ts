@@ -6,7 +6,7 @@ import { sendVerificationEmail, sendPasswordResetEmail } from '../utils/email';
 import { AppDataSource } from '../repositories/db';
 import { createError } from '../utils/errorHandler';
 
-const SALT_ROUNDS = 12;
+// const SALT_ROUNDS = 12;
 
 export class AuthService {
   static async signup({
@@ -26,22 +26,22 @@ export class AuthService {
       throw createError('Email already in use', 400);
     }
 
+    const hashedPassword = await bcrypt.hash(password, 12);
+
     const newUser = userRepo.create({
       email,
-      password_hash: password,
+      password_hash: hashedPassword, // FIX: Use the hashed password variable
       display_name: displayName,
       role: 'user',
     });
 
     await userRepo.save(newUser);
 
-    // Create a verification token (could also be UUID)
+    
     const token = generateToken(
       {
         userId: newUser.id,
-        displayName: newUser.display_name,
         email: newUser.email,
-        verified: newUser.email_verified,
         role: newUser.role,
       },
       '2h'
@@ -80,7 +80,7 @@ export class AuthService {
       throw createError('Please verify your email before logging in.', 403);
     }
 
-    // Update login so password hash does not change
+    
     await userRepo.update(user.id, {
       last_login_at: new Date(),
       last_login_ip: ip || user.last_login_ip,
@@ -97,7 +97,7 @@ export class AuthService {
       '2h'
     );
 
-    // return user details excluding password
+    
     const { password_hash: _, ...userSafeData } = user;
     return {
       message: 'Login successful',
@@ -139,7 +139,7 @@ export class AuthService {
     user.email_verified = true;
     await userRepo.save(user);
 
-    // Clean up all verification tokens for this user
+    
     await verificationRepo.delete({
       user: { id: user.id },
       type: 'email_verification',
@@ -192,7 +192,7 @@ export class AuthService {
       throw createError('No account associated with this email', 404);
     }
 
-    // Remove old reset tokens
+    
     await verificationRepo.delete({
       user: { id: user.id },
       type: 'password_reset',
@@ -240,7 +240,7 @@ export class AuthService {
 
     await userRepo.save(user);
 
-    // Clean up all password reset tokens for this user
+    
     await verificationRepo.delete({
       user: { id: user.id },
       type: 'password_reset',
@@ -284,7 +284,7 @@ export class AuthService {
       user.avatar_url = updates.avatarUrl;
     }
     if (updates.email !== undefined && updates.email !== user.email) {
-      // Email changed
+      
       user.email = updates.email;
       user.email_verified = false;
       emailChanged = true;
@@ -292,9 +292,9 @@ export class AuthService {
 
     await userRepo.save(user);
 
-    // If email changed, send verification
+    
     if (emailChanged) {
-      // Remove old verifications
+      
       await verificationRepo.delete({
         user: { id: user.id },
         type: 'email_verification',
@@ -323,11 +323,14 @@ export class AuthService {
     };
   }
 
-  static async deleteUser(userId: string) {
+  static async deleteUser(userId: string, password: string) {
     const userRepo = AppDataSource.getRepository(User);
     const user = await userRepo.findOne({ where: { id: userId } });
-
+    
     if (!user) throw createError('User not found', 404);
+
+    const isMatch = await bcrypt.compare(password, user.password_hash);
+    if (!isMatch) throw createError('Password is incorrect', 400);
 
     await userRepo.softDelete(userId);
     return { message: 'User deleted successfully' };

@@ -7,7 +7,7 @@ const router = Router();
 
 router.use(authMiddleware);
 
-// === Habit Routes ===
+
 router.post('/create', HabitController.createHabit);
 router.get('/all', HabitController.getAllHabits);
 router.get('/:id', HabitController.getHabitById);

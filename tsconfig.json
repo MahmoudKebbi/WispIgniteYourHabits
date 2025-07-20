@@ -20,7 +20,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "build/compiled",
+    "outDir": "dist",
     "pretty": true,
     "sourceMap": true,
     "strictFunctionTypes": false,

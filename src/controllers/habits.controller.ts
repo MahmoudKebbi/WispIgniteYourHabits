@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { HabitService } from '../services/habit.service';
-import { Category, HabitFrequency } from '../models/Habit'; // Adjust the path as needed
+import { Category, HabitFrequency } from '../models/Habit'; 
 
 export class HabitController {
-  // Create a new habit
+
   static async createHabit(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
@@ -68,7 +68,7 @@ export class HabitController {
     }
   }
 
-  // Get all active (non-archived) habits for user
+  
   static async getAllHabits(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
@@ -89,7 +89,7 @@ export class HabitController {
     }
   }
 
-  // Get a habit by ID
+  
   static async getHabitById(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
@@ -111,7 +111,7 @@ export class HabitController {
     }
   }
 
-  // Update habit details
+  
   static async updateHabit(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
@@ -136,7 +136,7 @@ export class HabitController {
     }
   }
 
-  // Archive a habit (soft delete)
+  
   static async archiveHabit(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
@@ -160,7 +160,7 @@ export class HabitController {
     }
   }
 
-  // Unarchive a habit
+  
   static async unarchiveHabit(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
@@ -184,7 +184,7 @@ export class HabitController {
     }
   }
 
-  // Permanently delete a habit
+  
   static async deleteHabit(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
@@ -204,11 +204,18 @@ export class HabitController {
   static async checkInHabit(req: Request, res: Response) {
     try {
       const user = req.user as { userId: string };
-
+      const apiKey = req.body.apiKey;
       const userId = user?.userId;
       if (!userId) {
         return res.status(400).json({ error: 'User not authenticated' });
       }
+      if (!apiKey) {
+        return res.status(400).json({ error: 'API key is required' });
+      }
+      if (!req.params.id) {
+        return res.status(400).json({ error: 'Habit ID is required' });
+      }
+      
       const habitId = req.params.id;
       const { sourceId, notes } = req.body;
 
@@ -221,6 +228,7 @@ export class HabitController {
         habitId,
         sourceId,
         notes,
+        apiKey: apiKey,
       });
       return res.status(200).json(result);
     } catch (err: any) {

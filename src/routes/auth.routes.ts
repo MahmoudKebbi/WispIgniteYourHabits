@@ -6,7 +6,7 @@ import { authSchema } from '../validators/auth.schema';
 
 const router = Router();
 
-// Public routes
+
 router.post('/login', validate(authSchema.login), AuthController.login);
 router.post('/signup', validate(authSchema.signup), AuthController.signup);
 router.get('/verify-email', validate(authSchema.verifyEmail), AuthController.verifyEmail);
@@ -18,7 +18,7 @@ router.post(
 router.post('/forgot-password', validate(authSchema.forgotPassword), AuthController.forgotPassword);
 router.post('/reset-password', validate(authSchema.resetPassword), AuthController.resetPassword);
 
-// Protected routes
+
 router.get('/me', authMiddleware, AuthController.me);
 router.post(
   '/change-password',

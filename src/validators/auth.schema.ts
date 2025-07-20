@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-// Base email validator with detailed errors
+
 const emailSchema = z.string().nonempty('Email is required').email('Invalid email format');
 
-// Base password validator with complexity requirements
+
 const passwordSchema = z
   .string()
   .nonempty('Password is required')
@@ -13,7 +13,7 @@ const passwordSchema = z
   .regex(/[0-9]/, 'Password must contain at least one number');
 
 export const authSchema = {
-  // Signup validation
+  
   signup: z.object({
     body: z.object({
       email: emailSchema,
@@ -26,7 +26,7 @@ export const authSchema = {
     }),
   }),
 
-  // Login validation
+  
   login: z.object({
     body: z.object({
       email: emailSchema,
@@ -34,21 +34,21 @@ export const authSchema = {
     }),
   }),
 
-  // Resend verification email validation
+  
   resendVerificationEmail: z.object({
     body: z.object({
       email: emailSchema,
     }),
   }),
 
-  // Forgot password validation
+  
   forgotPassword: z.object({
     body: z.object({
       email: emailSchema,
     }),
   }),
 
-  // Reset password validation
+  
   resetPassword: z.object({
     body: z.object({
       token: z.string().nonempty('Token is required'),
@@ -56,7 +56,7 @@ export const authSchema = {
     }),
   }),
 
-  // Change password validation
+  
   changePassword: z.object({
     body: z.object({
       currentPassword: z.string().nonempty('Current password is required'),
@@ -64,7 +64,7 @@ export const authSchema = {
     }),
   }),
 
-  // Update profile validation
+  
   updateProfile: z.object({
     body: z.object({
       displayName: z
@@ -77,7 +77,7 @@ export const authSchema = {
     }),
   }),
 
-  // Email verification token validation
+  
   verifyEmail: z.object({
     query: z.object({
       token: z.string().nonempty('Verification token is required'),

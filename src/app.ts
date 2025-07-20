@@ -1,4 +1,3 @@
-// src/app.ts
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -9,14 +8,14 @@ import coinxpRoutes from './routes/coinXp.routes';
 
 const app = express();
 
-// === Basic Middleware ===
+
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
 console.log('🚀 Middleware initialized');
 
-// === Routes ===;
+
 console.log('Mounting routes...');
 app.use('/api', healthRoutes);
 console.log('Health routes mounted on /api');
@@ -30,7 +29,7 @@ console.log('Habit routes mounted on /api/habits');
 app.use('/api/wallet', coinxpRoutes);
 console.log('Coin and XP routes mounted on /api/wallet');
 
-// === Fallback ===
+
 app.use((_, res) => res.status(404).json({ message: 'Not found' }));
 
 export default app;

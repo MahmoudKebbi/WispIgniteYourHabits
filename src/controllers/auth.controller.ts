@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
 
-const redirectUrl = 'https://www.google.com'; // Replace with your actual redirect URL
+const redirectUrl = 'https://www.google.com'; 
 
 export class AuthController {
   static async signup(req: Request, res: Response) {
@@ -22,7 +22,7 @@ export class AuthController {
     try {
       console.log('Login request received');
       const { email, password } = req.body;
-      // Get IP address (works behind proxies too)
+ 
       const ip =
         req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || '';
       const result = await AuthService.signIn({ email, password, ip });
@@ -36,7 +36,7 @@ export class AuthController {
   }
 
   static async me(req: Request, res: Response) {
-    res.status(201).json(req.user); // `req.user` comes from middleware
+    res.status(201).json(req.user);
   }
 
   static async verifyEmail(req: Request, res: Response) {
@@ -49,7 +49,7 @@ export class AuthController {
 
       const result = await AuthService.verifyEmail(token);
       console.log('Email verification successful:', result);
-      return res.redirect(redirectUrl); // Redirect to a success page or home page
+      return res.redirect(redirectUrl);
     } catch (err: any) {
       console.error('Email verification error:', err);
       const statusCode = err.statusCode || 500;
@@ -111,7 +111,7 @@ export class AuthController {
         return res.status(400).json({ error: 'User information is missing' });
       }
       const user = req.user as { userId: string };
-      const userId = user?.userId; // assuming user ID is attached by auth middleware
+      const userId = user?.userId; 
       const { currentPassword, newPassword } = req.body;
 
       if (!currentPassword || !newPassword) {
@@ -156,13 +156,14 @@ export class AuthController {
 
   static async deleteUser(req: Request, res: Response) {
     try {
-      const user = req.user as { id: string } | null;
-      const userId = user?.id;
+      const user = req.user as { userId: string } | null;
+      const password = req.body.password;
+      const userId = user?.userId;
       if (!userId) {
         return res.status(400).json({ error: 'User information is missing' });
       }
 
-      const result = await AuthService.deleteUser(userId);
+      const result = await AuthService.deleteUser(userId, password);
       return res.status(200).json(result);
     } catch (err: any) {
       console.error('Delete user error:', err);

@@ -1,14 +1,14 @@
-// middlewares/authenticateJWT.ts
+
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Extend the Request interface to include the user property
+
 declare global {
   namespace Express {
     interface Request {
-      user?: string | object; // Adjust type as needed
+      user?: string | object; 
     }
   }
 }

@@ -11,7 +11,7 @@ export const validate =
       });
       return next();
     } catch (error) {
-      // Format and return Zod validation errors
+      
       if (error instanceof ZodError) {
         const formattedErrors = error.issues.map((err) => ({
           path: err.path.join('.'),
@@ -24,7 +24,7 @@ export const validate =
         });
       }
 
-      // For non-Zod errors
+      
       return res.status(500).json({ error: 'Internal server error during validation' });
     }
   };

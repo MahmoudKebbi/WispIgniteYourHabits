@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_controller_1 = require("../controllers/auth.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const validate_1 = require("../middlewares/validate");
+const auth_schema_1 = require("../validators/auth.schema");
+const router = (0, express_1.Router)();
+router.post('/login', (0, validate_1.validate)(auth_schema_1.authSchema.login), auth_controller_1.AuthController.login);
+router.post('/signup', (0, validate_1.validate)(auth_schema_1.authSchema.signup), auth_controller_1.AuthController.signup);
+router.get('/verify-email', (0, validate_1.validate)(auth_schema_1.authSchema.verifyEmail), auth_controller_1.AuthController.verifyEmail);
+router.post('/resend-verification-email', (0, validate_1.validate)(auth_schema_1.authSchema.resendVerificationEmail), auth_controller_1.AuthController.resendVerificationEmail);
+router.post('/forgot-password', (0, validate_1.validate)(auth_schema_1.authSchema.forgotPassword), auth_controller_1.AuthController.forgotPassword);
+router.post('/reset-password', (0, validate_1.validate)(auth_schema_1.authSchema.resetPassword), auth_controller_1.AuthController.resetPassword);
+router.get('/me', auth_middleware_1.authMiddleware, auth_controller_1.AuthController.me);
+router.post('/change-password', auth_middleware_1.authMiddleware, (0, validate_1.validate)(auth_schema_1.authSchema.changePassword), auth_controller_1.AuthController.changePassword);
+router.patch('/update-profile', auth_middleware_1.authMiddleware, (0, validate_1.validate)(auth_schema_1.authSchema.updateProfile), auth_controller_1.AuthController.updateProfile);
+router.delete('/delete-user', auth_middleware_1.authMiddleware, auth_controller_1.AuthController.deleteUser);
+console.log('Auth routes initialized with validation.');
+exports.default = router;
+//# sourceMappingURL=auth.routes.js.map

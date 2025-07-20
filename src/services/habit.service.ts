@@ -71,7 +71,7 @@ export class HabitService {
       throw createError(`Invalid category: ${data.category}`, 400);
     }
 
-    // Set default xp and coins if not provided, based on difficulty
+    
     const difficulty = data.difficulty || 'easy'; // default difficulty if none given
     const xpReward = data.xpReward ?? XP_REWARDS_BY_DIFFICULTY[difficulty];
     const coinReward = data.coinReward ?? COIN_REWARDS_BY_DIFFICULTY[difficulty];
@@ -91,7 +91,7 @@ export class HabitService {
     });
 
     await habitRepo.save(habit);
-    return habit;
+    return { id: habit.id };
   }
 
   static async getAllHabits(userId: string) {
@@ -108,7 +108,7 @@ export class HabitService {
       where: { id: habitId, user: { id: userId } },
     });
     if (!habit) throw createError('Habit not found', 404);
-    return habit;
+    return { id: habit.id };
   }
 
   static async updateHabit(
@@ -125,7 +125,7 @@ export class HabitService {
     if (habit.user.id !== userId)
       throw createError('You do not have permission to update this habit', 403);
 
-    // Validate difficulty & category if present
+    
     if (updates.difficulty && !VALID_DIFFICULTIES.includes(updates.difficulty)) {
       throw createError(`Invalid difficulty: ${updates.difficulty}`, 400);
     }
@@ -140,10 +140,10 @@ export class HabitService {
       if (invalidDay) throw createError('daysOfWeek must contain values between 0 and 6', 400);
     }
 
-    // Apply updates safely
+    
     Object.assign(habit, updates);
 
-    // If difficulty changed and no explicit xp or coin updates, update rewards accordingly
+    
     if (
       updates.difficulty &&
       updates.xp_reward === undefined &&
@@ -158,7 +158,7 @@ export class HabitService {
   }
 
   static async archiveHabit(userId: string, habitId: string) {
-    const habitRepo = AppDataSource.getRepository(Habit);
+      const habitRepo = AppDataSource.getRepository(Habit);
     const habit = await habitRepo.findOne({
       where: { id: habitId },
       relations: ['user'],
@@ -167,9 +167,11 @@ export class HabitService {
     if (habit.user.id !== userId)
       throw createError('You do not have permission to archive this habit', 403);
 
+    
+
     habit.is_archived = true;
     await habitRepo.save(habit);
-    return habit;
+    return { id: habit.id };
   }
 
   static async unarchiveHabit(userId: string, habitId: string) {
@@ -184,7 +186,7 @@ export class HabitService {
 
     habit.is_archived = false;
     await habitRepo.save(habit);
-    return habit;
+    return { id: habit.id };
   }
 
   static async deleteHabit(userId: string, habitId: string) {
@@ -315,7 +317,7 @@ export class HabitService {
 
     const habitRepo = AppDataSource.getRepository(Habit);
 
-    // Perform a case-insensitive search on the habit name and description
+    
     const habits = await habitRepo.find({
       where: [
         { user: { id: userId }, name: ILike(`%${query}%`), is_archived: false },
