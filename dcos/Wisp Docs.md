@@ -17,8 +17,8 @@ Check if the server is running and connected to the database.
 
 ```json
 {
-  "status": "ok",
-  "uptime": "123.456s"
+   "status": "ok",
+   "uptime": "123.456s"
 }
 ```
 
@@ -36,9 +36,9 @@ Create a new user and send a verification email.
 
 ```json
 {
-  "email": "user@example.com",
-  "password": "SecurePass123",
-  "displayName": "WispSeeker"
+   "email": "user@example.com",
+   "password": "SecurePass123",
+   "displayName": "WispSeeker"
 }
 ```
 
@@ -46,7 +46,7 @@ Create a new user and send a verification email.
 
 ```json
 {
-  "message": "User created. Please verify your email."
+   "message": "User created. Please verify your email."
 }
 ```
 
@@ -60,8 +60,8 @@ Login using email and password.
 
 ```json
 {
-  "email": "user@example.com",
-  "password": "SecurePass123"
+   "email": "user@example.com",
+   "password": "SecurePass123"
 }
 ```
 
@@ -69,13 +69,13 @@ Login using email and password.
 
 ```json
 {
-  "token": "<jwt_token>",
-  "user": {
-    "id": "uuid",
-    "email": "user@example.com",
-    "displayName": "WispSeeker",
-    "avatarUrl": null
-  }
+   "token": "<jwt_token>",
+   "user": {
+      "id": "uuid",
+      "email": "user@example.com",
+      "displayName": "WispSeeker",
+      "avatarUrl": null
+   }
 }
 ```
 
@@ -89,7 +89,7 @@ Verify a user’s email address using the token sent via email.
 
 ```json
 {
-  "message": "Email successfully verified"
+   "message": "Email successfully verified"
 }
 ```
 
@@ -103,7 +103,7 @@ Resend verification email to unverified users.
 
 ```json
 {
-  "email": "user@example.com"
+   "email": "user@example.com"
 }
 ```
 
@@ -111,7 +111,7 @@ Resend verification email to unverified users.
 
 ```json
 {
-  "message": "Verification email resent successfully"
+   "message": "Verification email resent successfully"
 }
 ```
 
@@ -125,7 +125,7 @@ Trigger password reset email.
 
 ```json
 {
-  "email": "user@example.com"
+   "email": "user@example.com"
 }
 ```
 
@@ -133,7 +133,7 @@ Trigger password reset email.
 
 ```json
 {
-  "message": "Password reset email sent"
+   "message": "Password reset email sent"
 }
 ```
 
@@ -147,8 +147,8 @@ Reset password using token sent via email.
 
 ```json
 {
-  "token": "jwt_reset_token",
-  "newPassword": "NewPassword456"
+   "token": "jwt_reset_token",
+   "newPassword": "NewPassword456"
 }
 ```
 
@@ -156,7 +156,7 @@ Reset password using token sent via email.
 
 ```json
 {
-  "message": "Password has been reset successfully"
+   "message": "Password has been reset successfully"
 }
 ```
 
@@ -176,8 +176,8 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "currentPassword": "OldPassword123",
-  "newPassword": "NewSecurePassword456"
+   "currentPassword": "OldPassword123",
+   "newPassword": "NewSecurePassword456"
 }
 ```
 
@@ -185,7 +185,7 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Password changed successfully"
+   "message": "Password changed successfully"
 }
 ```
 
@@ -205,8 +205,8 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "displayName": "MysticWisp",
-  "avatarUrl": "https://cdn.wisp.io/avatars/emberfox.png"
+   "displayName": "MysticWisp",
+   "avatarUrl": "https://cdn.wisp.io/avatars/emberfox.png"
 }
 ```
 
@@ -214,13 +214,13 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Profile updated successfully",
-  "profile": {
-    "id": "uuid",
-    "email": "user@example.com",
-    "displayName": "MysticWisp",
-    "avatarUrl": "https://cdn.wisp.io/avatars/emberfox.png"
-  }
+   "message": "Profile updated successfully",
+   "profile": {
+      "id": "uuid",
+      "email": "user@example.com",
+      "displayName": "MysticWisp",
+      "avatarUrl": "https://cdn.wisp.io/avatars/emberfox.png"
+   }
 }
 ```
 
@@ -251,15 +251,15 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "name": "Morning Meditation",
-  "description": "10 minutes of mindfulness each morning",
-  "frequency": "daily", // "daily", "weekly", or "custom"
-  "goalPerPeriod": 1,
-  "difficulty": "medium", // "very_easy", "easy", "medium", "hard", "epic"
-  "category": "self_care", // "health", "productivity", "self_care", "chores", "creativity"
-  "xpReward": 20, // optional, defaults based on difficulty
-  "coinReward": 10, // optional, defaults based on difficulty
-  "daysOfWeek": [1, 3, 5] // optional, for custom frequency (0=Sunday, 6=Saturday)
+   "name": "Morning Meditation",
+   "description": "10 minutes of mindfulness each morning",
+   "frequency": "daily", // "daily", "weekly", or "custom"
+   "goalPerPeriod": 1,
+   "difficulty": "medium", // "very_easy", "easy", "medium", "hard", "epic"
+   "category": "self_care", // "health", "productivity", "self_care", "chores", "creativity"
+   "xpReward": 20, // optional, defaults based on difficulty
+   "coinReward": 10, // optional, defaults based on difficulty
+   "daysOfWeek": [1, 3, 5] // optional, for custom frequency (0=Sunday, 6=Saturday)
 }
 ```
 
@@ -267,21 +267,21 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Habit created successfully",
-  "habit": {
-    "id": "uuid",
-    "name": "Morning Meditation",
-    "description": "10 minutes of mindfulness each morning",
-    "frequency": "daily",
-    "goal_per_period": 1,
-    "difficulty": "medium",
-    "category": "self_care",
-    "xp_reward": 20,
-    "coin_reward": 10,
-    "is_archived": false,
-    "created_at": "2023-01-01T12:00:00Z",
-    "updated_at": "2023-01-01T12:00:00Z"
-  }
+   "message": "Habit created successfully",
+   "habit": {
+      "id": "uuid",
+      "name": "Morning Meditation",
+      "description": "10 minutes of mindfulness each morning",
+      "frequency": "daily",
+      "goal_per_period": 1,
+      "difficulty": "medium",
+      "category": "self_care",
+      "xp_reward": 20,
+      "coin_reward": 10,
+      "is_archived": false,
+      "created_at": "2023-01-01T12:00:00Z",
+      "updated_at": "2023-01-01T12:00:00Z"
+   }
 }
 ```
 
@@ -301,23 +301,23 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "habits": [
-    {
-      "id": "uuid",
-      "name": "Morning Meditation",
-      "description": "10 minutes of mindfulness each morning",
-      "frequency": "daily",
-      "goal_per_period": 1,
-      "difficulty": "medium",
-      "category": "self_care",
-      "xp_reward": 20,
-      "coin_reward": 10,
-      "is_archived": false,
-      "created_at": "2023-01-01T12:00:00Z",
-      "updated_at": "2023-01-01T12:00:00Z"
-    }
-    // Additional habits...
-  ]
+   "habits": [
+      {
+         "id": "uuid",
+         "name": "Morning Meditation",
+         "description": "10 minutes of mindfulness each morning",
+         "frequency": "daily",
+         "goal_per_period": 1,
+         "difficulty": "medium",
+         "category": "self_care",
+         "xp_reward": 20,
+         "coin_reward": 10,
+         "is_archived": false,
+         "created_at": "2023-01-01T12:00:00Z",
+         "updated_at": "2023-01-01T12:00:00Z"
+      }
+      // Additional habits...
+   ]
 }
 ```
 
@@ -337,20 +337,20 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "habit": {
-    "id": "uuid",
-    "name": "Morning Meditation",
-    "description": "10 minutes of mindfulness each morning",
-    "frequency": "daily",
-    "goal_per_period": 1,
-    "difficulty": "medium",
-    "category": "self_care",
-    "xp_reward": 20,
-    "coin_reward": 10,
-    "is_archived": false,
-    "created_at": "2023-01-01T12:00:00Z",
-    "updated_at": "2023-01-01T12:00:00Z"
-  }
+   "habit": {
+      "id": "uuid",
+      "name": "Morning Meditation",
+      "description": "10 minutes of mindfulness each morning",
+      "frequency": "daily",
+      "goal_per_period": 1,
+      "difficulty": "medium",
+      "category": "self_care",
+      "xp_reward": 20,
+      "coin_reward": 10,
+      "is_archived": false,
+      "created_at": "2023-01-01T12:00:00Z",
+      "updated_at": "2023-01-01T12:00:00Z"
+   }
 }
 ```
 
@@ -370,15 +370,15 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "name": "Evening Meditation",
-  "description": "Updated description",
-  "frequency": "daily",
-  "goal_per_period": 1,
-  "difficulty": "hard",
-  "category": "self_care",
-  "xp_reward": 40,
-  "coin_reward": 20,
-  "days_of_week": [1, 3, 5]
+   "name": "Evening Meditation",
+   "description": "Updated description",
+   "frequency": "daily",
+   "goal_per_period": 1,
+   "difficulty": "hard",
+   "category": "self_care",
+   "xp_reward": 40,
+   "coin_reward": 20,
+   "days_of_week": [1, 3, 5]
 }
 ```
 
@@ -386,21 +386,21 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Habit updated successfully",
-  "habit": {
-    "id": "uuid",
-    "name": "Evening Meditation",
-    "description": "Updated description",
-    "frequency": "daily",
-    "goal_per_period": 1,
-    "difficulty": "hard",
-    "category": "self_care",
-    "xp_reward": 40,
-    "coin_reward": 20,
-    "is_archived": false,
-    "created_at": "2023-01-01T12:00:00Z",
-    "updated_at": "2023-01-02T12:00:00Z"
-  }
+   "message": "Habit updated successfully",
+   "habit": {
+      "id": "uuid",
+      "name": "Evening Meditation",
+      "description": "Updated description",
+      "frequency": "daily",
+      "goal_per_period": 1,
+      "difficulty": "hard",
+      "category": "self_care",
+      "xp_reward": 40,
+      "coin_reward": 20,
+      "is_archived": false,
+      "created_at": "2023-01-01T12:00:00Z",
+      "updated_at": "2023-01-02T12:00:00Z"
+   }
 }
 ```
 
@@ -420,9 +420,9 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "habitId": "uuid",
-  "sourceId": "uuid", // optional, source of the check-in
-  "notes": "Felt really calm today" // optional
+   "habitId": "uuid",
+   "sourceId": "uuid", // optional, source of the check-in
+   "notes": "Felt really calm today" // optional
 }
 ```
 
@@ -430,16 +430,16 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Habit checked in successfully",
-  "event": {
-    "id": "uuid",
-    "habit": { "id": "uuid" },
-    "user": { "id": "uuid" },
-    "completed_at": "2023-01-02T12:00:00Z",
-    "xp_earned": 20,
-    "coin_earned": 10,
-    "notes": "Felt really calm today"
-  }
+   "message": "Habit checked in successfully",
+   "event": {
+      "id": "uuid",
+      "habit": { "id": "uuid" },
+      "user": { "id": "uuid" },
+      "completed_at": "2023-01-02T12:00:00Z",
+      "xp_earned": 20,
+      "coin_earned": 10,
+      "notes": "Felt really calm today"
+   }
 }
 ```
 
@@ -459,13 +459,13 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Habit archived successfully",
-  "habit": {
-    "id": "uuid",
-    "name": "Morning Meditation",
-    "is_archived": true
-    // Other habit properties...
-  }
+   "message": "Habit archived successfully",
+   "habit": {
+      "id": "uuid",
+      "name": "Morning Meditation",
+      "is_archived": true
+      // Other habit properties...
+   }
 }
 ```
 
@@ -485,13 +485,13 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Habit unarchived successfully",
-  "habit": {
-    "id": "uuid",
-    "name": "Morning Meditation",
-    "is_archived": false
-    // Other habit properties...
-  }
+   "message": "Habit unarchived successfully",
+   "habit": {
+      "id": "uuid",
+      "name": "Morning Meditation",
+      "is_archived": false
+      // Other habit properties...
+   }
 }
 ```
 
@@ -511,7 +511,7 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "message": "Habit deleted successfully"
+   "message": "Habit deleted successfully"
 }
 ```
 
@@ -531,15 +531,15 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "habits": [
-    {
-      "id": "uuid",
-      "name": "Morning Meditation",
-      "frequency": "daily"
-      // Other habit properties...
-    }
-    // Additional habits with the specified frequency...
-  ]
+   "habits": [
+      {
+         "id": "uuid",
+         "name": "Morning Meditation",
+         "frequency": "daily"
+         // Other habit properties...
+      }
+      // Additional habits with the specified frequency...
+   ]
 }
 ```
 
@@ -559,15 +559,15 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "archivedHabits": [
-    {
-      "id": "uuid",
-      "name": "Old Habit",
-      "is_archived": true
-      // Other habit properties...
-    }
-    // Additional archived habits...
-  ]
+   "archivedHabits": [
+      {
+         "id": "uuid",
+         "name": "Old Habit",
+         "is_archived": true
+         // Other habit properties...
+      }
+      // Additional archived habits...
+   ]
 }
 ```
 
@@ -587,7 +587,7 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "count": 12
+   "count": 12
 }
 ```
 
@@ -607,7 +607,7 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "count": 5
+   "count": 5
 }
 ```
 
@@ -627,11 +627,11 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "habit": {
-    "id": "uuid",
-    "name": "Morning Meditation"
-    // Other habit properties...
-  }
+   "habit": {
+      "id": "uuid",
+      "name": "Morning Meditation"
+      // Other habit properties...
+   }
 }
 ```
 
@@ -651,20 +651,20 @@ Authorization: Bearer <jwt_token>
 
 ```json
 {
-  "habits": [
-    {
-      "id": "uuid",
-      "name": "Morning Meditation",
-      "description": "10 minutes of mindfulness each morning"
-      // Other habit properties...
-    },
-    {
-      "id": "uuid",
-      "name": "Evening Meditation",
-      "description": "Calm down before sleep"
-      // Other habit properties...
-    }
-    // Additional matching habits...
-  ]
+   "habits": [
+      {
+         "id": "uuid",
+         "name": "Morning Meditation",
+         "description": "10 minutes of mindfulness each morning"
+         // Other habit properties...
+      },
+      {
+         "id": "uuid",
+         "name": "Evening Meditation",
+         "description": "Calm down before sleep"
+         // Other habit properties...
+      }
+      // Additional matching habits...
+   ]
 }
 ```

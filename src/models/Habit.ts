@@ -1,12 +1,12 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  Check,
+   Entity,
+   PrimaryGeneratedColumn,
+   Column,
+   ManyToOne,
+   JoinColumn,
+   CreateDateColumn,
+   UpdateDateColumn,
+   Check,
 } from 'typeorm';
 import { User } from './User';
 
@@ -18,64 +18,64 @@ export type Category = 'health' | 'productivity' | 'self_care' | 'chores' | 'cre
 @Check(`"goal_per_period" >= 1`)
 @Check(`difficulty IS NULL OR difficulty IN ('very_easy', 'easy', 'medium', 'hard', 'epic')`)
 @Check(
-  `category IS NULL OR category IN ('health', 'productivity', 'self_care', 'chores', 'creativity')`
+   `category IS NULL OR category IN ('health', 'productivity', 'self_care', 'chores', 'creativity')`
 )
 export class Habit {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+   @PrimaryGeneratedColumn('uuid')
+   id: string;
 
-  @ManyToOne(() => User, (user) => user.id, {
-    onDelete: 'CASCADE',
-    nullable: false,
-  })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+   @ManyToOne(() => User, (user) => user.id, {
+      onDelete: 'CASCADE',
+      nullable: false,
+   })
+   @JoinColumn({ name: 'user_id' })
+   user: User;
 
-  @Column({ length: 100 })
-  name: string;
+   @Column({ length: 100 })
+   name: string;
 
-  @Column({ type: 'text', nullable: true })
-  description?: string;
+   @Column({ type: 'text', nullable: true })
+   description?: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['daily', 'weekly', 'custom'],
-    default: 'daily',
-  })
-  frequency: HabitFrequency;
+   @Column({
+      type: 'enum',
+      enum: ['daily', 'weekly', 'custom'],
+      default: 'daily',
+   })
+   frequency: HabitFrequency;
 
-  @Column({ type: 'int' })
-  goal_per_period: number;
+   @Column({ type: 'int' })
+   goal_per_period: number;
 
-  @Column({
-    type: 'enum',
-    enum: ['very_easy', 'easy', 'medium', 'hard', 'epic'],
-    nullable: true,
-  })
-  difficulty?: Difficulty;
+   @Column({
+      type: 'enum',
+      enum: ['very_easy', 'easy', 'medium', 'hard', 'epic'],
+      nullable: true,
+   })
+   difficulty?: Difficulty;
 
-  @Column({
-    type: 'enum',
-    enum: ['health', 'productivity', 'self_care', 'chores', 'creativity'],
-    nullable: true,
-  })
-  category?: Category;
+   @Column({
+      type: 'enum',
+      enum: ['health', 'productivity', 'self_care', 'chores', 'creativity'],
+      nullable: true,
+   })
+   category?: Category;
 
-  @Column({ type: 'int', nullable: true })
-  xp_reward?: number;
+   @Column({ type: 'int', nullable: true })
+   xp_reward?: number;
 
-  @Column({ type: 'int', nullable: true })
-  coin_reward?: number;
+   @Column({ type: 'int', nullable: true })
+   coin_reward?: number;
 
-  @Column({ default: false })
-  is_archived: boolean;
+   @Column({ default: false })
+   is_archived: boolean;
 
-  @Column({ type: 'int', array: true, nullable: true })
-  days_of_week?: number[];
+   @Column({ type: 'int', array: true, nullable: true })
+   days_of_week?: number[];
 
-  @CreateDateColumn({ type: 'timestamp with time zone' })
-  created_at: Date;
+   @CreateDateColumn({ type: 'timestamp with time zone' })
+   created_at: Date;
 
-  @UpdateDateColumn({ type: 'timestamp with time zone' })
-  updated_at: Date;
+   @UpdateDateColumn({ type: 'timestamp with time zone' })
+   updated_at: Date;
 }

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+   db:
+      image: postgres:15
+      container_name: wisp_postgres
+      restart: always
+      environment:
+         POSTGRES_USER: ${WISP_DB_ADMIN_USERNAME}
+         POSTGRES_PASSWORD: ${WISP_DB_ADMIN_PASSWORD}
+         POSTGRES_DB: ${WISP_DB_NAME}
+      ports:
+         - '${WISP_DB_PORT}:5432'
+      volumes:
+         - db_data:/var/lib/postgresql/data
+      env_file:
+         - .env
+
+   backend:
+      build: .
+      container_name: wisp_backend
+      restart: always
+      ports:
+         - '${PORT}:${PORT}'
+      depends_on:
+         - db
+      environment:
+         PORT: ${PORT}
+         JWT_SECRET: ${JWT_SECRET}
+         WISP_DB_HOST: ${WISP_DB_HOST}
+         WISP_DB_PORT: 5432
+         WISP_DB_NAME: ${WISP_DB_NAME}
+         WISP_DB_APP_USER_USERNAME: ${WISP_DB_APP_USER_USERNAME}
+         WISP_DB_APP_USER_PASSWORD: ${WISP_DB_APP_USER_PASSWORD}
+         WISP_AUTH_CLIENT_USERNAME: ${WISP_AUTH_CLIENT_USERNAME}
+         WISP_AUTH_CLIENT_PASSWORD: ${WISP_AUTH_CLIENT_PASSWORD}
+      env_file:
+         - .env
+
+volumes:
+   db_data:
