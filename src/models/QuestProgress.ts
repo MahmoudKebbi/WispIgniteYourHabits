@@ -6,6 +6,7 @@ import {
    Column,
    CreateDateColumn,
    UpdateDateColumn,
+   Index,
 } from 'typeorm';
 import { User } from './User';
 import { Quest } from './Quest';
@@ -13,6 +14,10 @@ import { Quest } from './Quest';
 export type ParticipantStatus = 'not_started' | 'in_progress' | 'completed' | 'failed';
 
 @Entity('quest_progress')
+@Index('IDX_QUESTPROGRESS_USER', ['user'])
+@Index('IDX_QUESTPROGRESS_QUEST', ['quest'])
+@Index('IDX_QUESTPROGRESS_USER_QUEST', ['user', 'quest'])
+@Index('IDX_QUESTPROGRESS_STATUS', ['status'])
 export class QuestProgress {
    @PrimaryGeneratedColumn('uuid')
    id: string;

@@ -7,12 +7,15 @@ import {
    CreateDateColumn,
    UpdateDateColumn,
    Check,
+   Index,
 } from 'typeorm';
 import { User } from './User';
 
 @Entity('user_levels')
 @Check(`"xp_total" >= 0`)
 @Check(`"xp_to_next" >= 0`)
+@Index('IDX_USERLEVEL_USER', ['user'])
+@Index('IDX_USERLEVEL_LEVEL', ['level'])
 export class UserLevel {
    @PrimaryGeneratedColumn('uuid')
    id: string;

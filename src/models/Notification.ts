@@ -12,6 +12,10 @@ import { User } from './User';
 export type NotificationType = 'friend_request' | 'quest_update' | 'habit_reminder' | 'system';
 
 @Entity('notifications')
+@Index('IDX_NOTIFICATION_USER', ['user'])
+@Index('IDX_NOTIFICATION_TYPE', ['type'])
+@Index('IDX_NOTIFICATION_IS_READ', ['is_read'])
+@Index('IDX_NOTIFICATION_REFERENCE', ['reference_id'])
 export class Notification {
    @PrimaryGeneratedColumn('uuid')
    id: string;
@@ -27,7 +31,6 @@ export class Notification {
       type: 'enum',
       enum: ['friend_request', 'quest_update', 'habit_reminder', 'system'],
    })
-   @Index()
    type: NotificationType;
 
    @Column({ type: 'text' })

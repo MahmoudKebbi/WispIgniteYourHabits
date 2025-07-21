@@ -7,6 +7,7 @@ import {
    CreateDateColumn,
    UpdateDateColumn,
    Check,
+   Index,
 } from 'typeorm';
 import { User } from './User';
 
@@ -20,6 +21,11 @@ export type Category = 'health' | 'productivity' | 'self_care' | 'chores' | 'cre
 @Check(
    `category IS NULL OR category IN ('health', 'productivity', 'self_care', 'chores', 'creativity')`
 )
+@Index('IDX_HABIT_USER', ['user'])
+@Index('IDX_HABIT_NAME', ['name'])
+@Index('IDX_HABIT_USER_NAME', ['user', 'name'])
+@Index('IDX_HABIT_CATEGORY', ['category'])
+@Index('IDX_HABIT_DIFFICULTY', ['difficulty'])
 export class Habit {
    @PrimaryGeneratedColumn('uuid')
    id: string;

@@ -1,9 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { User } from './User';
 import { Habit } from './Habit';
 import { Source } from './Source';
 
 @Entity('habit_events')
+@Index('IDX_HABITEVENT_USER', ['user'])
+@Index('IDX_HABITEVENT_HABIT', ['habit'])
+@Index('IDX_HABITEVENT_USER_HABIT', ['user', 'habit'])
+@Index('IDX_HABITEVENT_COMPLETED_AT', ['completed_at'])
 export class HabitEvent {
    @PrimaryGeneratedColumn('uuid')
    id: string;

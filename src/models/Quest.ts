@@ -8,12 +8,16 @@ import {
    JoinTable,
    CreateDateColumn,
    UpdateDateColumn,
+   Index,
 } from 'typeorm';
 import { User } from './User';
 
 export type QuestStatus = 'open' | 'in_progress' | 'completed' | 'failed';
 
 @Entity('quests')
+@Index('IDX_QUEST_CREATOR', ['creator'])
+@Index('IDX_QUEST_STATUS', ['status'])
+@Index('IDX_QUEST_IS_FRIEND_QUEST', ['is_friend_quest'])
 export class Quest {
    @PrimaryGeneratedColumn('uuid')
    id: string;

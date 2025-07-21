@@ -5,10 +5,13 @@ import {
    ManyToOne,
    JoinColumn,
    CreateDateColumn,
+   Index,
 } from 'typeorm';
 import { User } from './User';
 
 @Entity('xp_transactions')
+@Index('IDX_XPTRANSACTION_USER', ['user'])
+@Index('IDX_XPTRANSACTION_REFERENCE', ['reference_id'])
 export class XpTransaction {
    @PrimaryGeneratedColumn('uuid')
    id: string;

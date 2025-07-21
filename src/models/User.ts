@@ -15,12 +15,13 @@ import * as bcrypt from 'bcrypt';
 export type UserRole = 'user' | 'admin';
 
 @Entity('users')
+@Index('IDX_USER_EMAIL', ['email'], { unique: true })
+@Index('IDX_USER_IS_ACTIVE', ['is_active'])
 export class User {
    @PrimaryGeneratedColumn('uuid')
    id: string;
 
    @Column({ unique: true })
-   @Index({ unique: true })
    email: string;
 
    @Column()
@@ -63,23 +64,6 @@ export class User {
 
    @UpdateDateColumn({ type: 'timestamp with time zone' })
    updated_at: Date;
-
-   // // 🔐 Hash password on insert/update
-   // @BeforeInsert()
-   // @BeforeUpdate()
-   // async hashPassword() {
-   //   // Only hash the password if it's a new record or if the password has been explicitly changed
-   //   if (this.password_hash && this.isPasswordChanged()) {
-   //     const saltRounds = 12;
-   //     this.password_hash = await bcrypt.hash(this.password_hash, saltRounds);
-   //   }
-   // }
-
-   // // Helper method to check if the password has been changed
-   // private isPasswordChanged(): boolean {
-   //   // Check if the password_hash field has been modified
-   //   return this.hasOwnProperty('password_hash');
-   // }
 
    // ✨ Normalize email before saving
    @BeforeInsert()
