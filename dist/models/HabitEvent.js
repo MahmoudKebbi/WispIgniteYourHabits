@@ -62,6 +62,10 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", String)
 ], HabitEvent.prototype, "notes", void 0);
 exports.HabitEvent = HabitEvent = tslib_1.__decorate([
-    (0, typeorm_1.Entity)('habit_events')
+    (0, typeorm_1.Entity)('habit_events'),
+    (0, typeorm_1.Index)('IDX_HABITEVENT_USER', ['user']),
+    (0, typeorm_1.Index)('IDX_HABITEVENT_HABIT', ['habit']),
+    (0, typeorm_1.Index)('IDX_HABITEVENT_USER_HABIT', ['user', 'habit']),
+    (0, typeorm_1.Index)('IDX_HABITEVENT_COMPLETED_AT', ['completed_at'])
 ], HabitEvent);
 //# sourceMappingURL=HabitEvent.js.map

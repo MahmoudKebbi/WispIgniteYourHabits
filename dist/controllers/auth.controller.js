@@ -22,7 +22,9 @@ class AuthController {
         try {
             console.log('Login request received');
             const { email, password } = req.body;
-            const ip = req.headers['x-forwarded-for']?.toString().split(',')[0] || req.socket.remoteAddress || '';
+            const ip = req.headers['x-forwarded-for']?.toString().split(',')[0] ||
+                req.socket.remoteAddress ||
+                '';
             const result = await auth_service_1.AuthService.signIn({ email, password, ip });
             console.log('Login successful:', result);
             return res.status(201).json(result);

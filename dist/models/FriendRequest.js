@@ -52,6 +52,9 @@ tslib_1.__decorate([
 exports.FriendRequest = FriendRequest = tslib_1.__decorate([
     (0, typeorm_1.Entity)('friend_requests'),
     (0, typeorm_1.Unique)(['sender', 'receiver']),
-    (0, typeorm_1.Check)(`"sender_id" <> "receiver_id"`)
+    (0, typeorm_1.Check)(`"sender_id" <> "receiver_id"`),
+    (0, typeorm_1.Index)('IDX_FRIENDREQUEST_SENDER', ['sender']),
+    (0, typeorm_1.Index)('IDX_FRIENDREQUEST_RECEIVER', ['receiver']),
+    (0, typeorm_1.Index)('IDX_FRIENDREQUEST_SENDER_RECEIVER', ['sender', 'receiver'])
 ], FriendRequest);
 //# sourceMappingURL=FriendRequest.js.map

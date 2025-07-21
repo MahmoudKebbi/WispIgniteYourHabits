@@ -7,11 +7,11 @@ class HabitEventsController {
         try {
             const user = req.user;
             const userId = user.userId;
-            const { habitId, startDate, endDate } = req.query;
             if (!userId) {
                 console.error('User not authenticated');
                 return res.status(400).json({ error: 'User not authenticated' });
             }
+            const { habitId, startDate, endDate } = req.query;
             if (!habitId) {
                 return res.status(400).json({ error: 'Habit ID is required' });
             }

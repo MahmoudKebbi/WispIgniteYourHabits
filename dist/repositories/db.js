@@ -17,6 +17,8 @@ const Item_1 = require("../models/Item");
 const CoinTransaction_1 = require("../models/CoinTransaction");
 const Notification_1 = require("../models/Notification");
 const UserVerification_1 = require("../models/UserVerification");
+const Friend_1 = require("../models/Friend");
+const QuestProgress_1 = require("../models/QuestProgress");
 dotenv_1.default.config();
 exports.AppDataSource = new typeorm_1.DataSource({
     type: 'postgres',
@@ -26,19 +28,21 @@ exports.AppDataSource = new typeorm_1.DataSource({
     password: process.env.WISP_DB_ADMIN_PASSWORD,
     database: process.env.WISP_DB_NAME,
     entities: [
-        User_1.User,
-        UserVerification_1.UserVerification,
-        Source_1.Source,
-        Habit_1.Habit,
-        FriendRequest_1.FriendRequest,
-        HabitEvent_1.HabitEvent,
-        XPTransaction_1.XpTransaction,
-        UserLevel_1.UserLevel,
-        Quest_1.Quest,
-        Item_1.Item,
-        Inventory_1.Inventory,
         CoinTransaction_1.CoinTransaction,
+        Friend_1.Friend,
+        FriendRequest_1.FriendRequest,
+        Habit_1.Habit,
+        HabitEvent_1.HabitEvent,
+        Inventory_1.Inventory,
+        Item_1.Item,
         Notification_1.Notification,
+        Quest_1.Quest,
+        QuestProgress_1.QuestProgress,
+        Source_1.Source,
+        User_1.User,
+        UserLevel_1.UserLevel,
+        UserVerification_1.UserVerification,
+        XPTransaction_1.XpTransaction,
     ],
     synchronize: true,
 });

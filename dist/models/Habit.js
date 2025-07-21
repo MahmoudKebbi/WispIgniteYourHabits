@@ -97,6 +97,11 @@ exports.Habit = Habit = tslib_1.__decorate([
     (0, typeorm_1.Entity)('habits'),
     (0, typeorm_1.Check)(`"goal_per_period" >= 1`),
     (0, typeorm_1.Check)(`difficulty IS NULL OR difficulty IN ('very_easy', 'easy', 'medium', 'hard', 'epic')`),
-    (0, typeorm_1.Check)(`category IS NULL OR category IN ('health', 'productivity', 'self_care', 'chores', 'creativity')`)
+    (0, typeorm_1.Check)(`category IS NULL OR category IN ('health', 'productivity', 'self_care', 'chores', 'creativity')`),
+    (0, typeorm_1.Index)('IDX_HABIT_USER', ['user']),
+    (0, typeorm_1.Index)('IDX_HABIT_NAME', ['name']),
+    (0, typeorm_1.Index)('IDX_HABIT_USER_NAME', ['user', 'name']),
+    (0, typeorm_1.Index)('IDX_HABIT_CATEGORY', ['category']),
+    (0, typeorm_1.Index)('IDX_HABIT_DIFFICULTY', ['difficulty'])
 ], Habit);
 //# sourceMappingURL=Habit.js.map

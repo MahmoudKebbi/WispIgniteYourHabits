@@ -51,6 +51,8 @@ tslib_1.__decorate([
 exports.UserLevel = UserLevel = tslib_1.__decorate([
     (0, typeorm_1.Entity)('user_levels'),
     (0, typeorm_1.Check)(`"xp_total" >= 0`),
-    (0, typeorm_1.Check)(`"xp_to_next" >= 0`)
+    (0, typeorm_1.Check)(`"xp_to_next" >= 0`),
+    (0, typeorm_1.Index)('IDX_USERLEVEL_USER', ['user']),
+    (0, typeorm_1.Index)('IDX_USERLEVEL_LEVEL', ['level'])
 ], UserLevel);
 //# sourceMappingURL=UserLevel.js.map

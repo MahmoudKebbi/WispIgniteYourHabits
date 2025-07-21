@@ -86,6 +86,9 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", Date)
 ], Quest.prototype, "updated_at", void 0);
 exports.Quest = Quest = tslib_1.__decorate([
-    (0, typeorm_1.Entity)('quests')
+    (0, typeorm_1.Entity)('quests'),
+    (0, typeorm_1.Index)('IDX_QUEST_CREATOR', ['creator']),
+    (0, typeorm_1.Index)('IDX_QUEST_STATUS', ['status']),
+    (0, typeorm_1.Index)('IDX_QUEST_IS_FRIEND_QUEST', ['is_friend_quest'])
 ], Quest);
 //# sourceMappingURL=Quest.js.map

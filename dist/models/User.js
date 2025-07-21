@@ -20,21 +20,6 @@ let User = class User {
     last_login_ip;
     created_at;
     updated_at;
-    // // 🔐 Hash password on insert/update
-    // @BeforeInsert()
-    // @BeforeUpdate()
-    // async hashPassword() {
-    //   // Only hash the password if it's a new record or if the password has been explicitly changed
-    //   if (this.password_hash && this.isPasswordChanged()) {
-    //     const saltRounds = 12;
-    //     this.password_hash = await bcrypt.hash(this.password_hash, saltRounds);
-    //   }
-    // }
-    // // Helper method to check if the password has been changed
-    // private isPasswordChanged(): boolean {
-    //   // Check if the password_hash field has been modified
-    //   return this.hasOwnProperty('password_hash');
-    // }
     // ✨ Normalize email before saving
     normalizeEmail() {
         if (this.email) {
@@ -53,7 +38,6 @@ tslib_1.__decorate([
 ], User.prototype, "id", void 0);
 tslib_1.__decorate([
     (0, typeorm_1.Column)({ unique: true }),
-    (0, typeorm_1.Index)({ unique: true }),
     tslib_1.__metadata("design:type", String)
 ], User.prototype, "email", void 0);
 tslib_1.__decorate([
@@ -117,6 +101,8 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", void 0)
 ], User.prototype, "normalizeEmail", null);
 exports.User = User = tslib_1.__decorate([
-    (0, typeorm_1.Entity)('users')
+    (0, typeorm_1.Entity)('users'),
+    (0, typeorm_1.Index)('IDX_USER_EMAIL', ['email'], { unique: true }),
+    (0, typeorm_1.Index)('IDX_USER_IS_ACTIVE', ['is_active'])
 ], User);
 //# sourceMappingURL=User.js.map

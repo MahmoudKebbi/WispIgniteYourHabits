@@ -31,7 +31,6 @@ tslib_1.__decorate([
         type: 'enum',
         enum: ['friend_request', 'quest_update', 'habit_reminder', 'system'],
     }),
-    (0, typeorm_1.Index)(),
     tslib_1.__metadata("design:type", String)
 ], Notification.prototype, "type", void 0);
 tslib_1.__decorate([
@@ -51,6 +50,10 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", Date)
 ], Notification.prototype, "created_at", void 0);
 exports.Notification = Notification = tslib_1.__decorate([
-    (0, typeorm_1.Entity)('notifications')
+    (0, typeorm_1.Entity)('notifications'),
+    (0, typeorm_1.Index)('IDX_NOTIFICATION_USER', ['user']),
+    (0, typeorm_1.Index)('IDX_NOTIFICATION_TYPE', ['type']),
+    (0, typeorm_1.Index)('IDX_NOTIFICATION_IS_READ', ['is_read']),
+    (0, typeorm_1.Index)('IDX_NOTIFICATION_REFERENCE', ['reference_id'])
 ], Notification);
 //# sourceMappingURL=Notification.js.map

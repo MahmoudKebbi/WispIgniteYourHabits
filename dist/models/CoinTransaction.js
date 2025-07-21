@@ -42,6 +42,8 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", Date)
 ], CoinTransaction.prototype, "created_at", void 0);
 exports.CoinTransaction = CoinTransaction = tslib_1.__decorate([
-    (0, typeorm_1.Entity)('coin_transactions')
+    (0, typeorm_1.Entity)('coin_transactions'),
+    (0, typeorm_1.Index)('IDX_COINTRANSACTION_USER', ['user']),
+    (0, typeorm_1.Index)('IDX_COINTRANSACTION_REFERENCE', ['reference_id'])
 ], CoinTransaction);
 //# sourceMappingURL=CoinTransaction.js.map

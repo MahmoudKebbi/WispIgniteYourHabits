@@ -35,13 +35,11 @@ export class UserLevelService {
 
       userLevel.xp_total += xpAmount;
 
-      let leveledUp = false;
       while (userLevel.xp_total >= userLevel.xp_to_next) {
          userLevel.xp_total -= userLevel.xp_to_next;
          userLevel.level += 1;
          userLevel.xp_to_next = calculateXpToNextLevel(userLevel.level);
          userLevel.level_up_at = new Date();
-         leveledUp = true;
       }
 
       return repo.save(userLevel);

@@ -6,11 +6,9 @@ class HabitController {
     static async createHabit(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
-            if (!userId) {
-                return res.status(400).json({ error: 'User ID is required' });
+            if (!userId || !user) {
+                return res.status(401).json({ error: 'User ID is required' });
             }
             const { name, description, frequency, goalPerPeriod, difficulty, category, xpReward, coinReward, daysOfWeek, } = req.body;
             if (!name || !goalPerPeriod) {
@@ -22,11 +20,15 @@ class HabitController {
             if (daysOfWeek) {
                 const invalidDay = daysOfWeek.some((day) => day < 0 || day > 6);
                 if (invalidDay) {
-                    return res.status(400).json({ error: 'daysOfWeek must contain values between 0 and 6' });
+                    return res
+                        .status(400)
+                        .json({ error: 'daysOfWeek must contain values between 0 and 6' });
                 }
             }
             if (!frequency || !difficulty || !category) {
-                return res.status(400).json({ error: 'Frequency, difficulty, and category are required' });
+                return res
+                    .status(400)
+                    .json({ error: 'Frequency, difficulty, and category are required' });
             }
             const habit = await habit_service_1.HabitService.createHabit(userId, {
                 name,
@@ -53,10 +55,8 @@ class HabitController {
     static async getAllHabits(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
-            if (!userId) {
+            if (!userId || !user) {
                 return res.status(400).json({ error: 'User ID is required' });
             }
             const habits = await habit_service_1.HabitService.getAllHabits(userId);
@@ -71,11 +71,9 @@ class HabitController {
     static async getHabitById(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
             const habitId = req.params.id;
-            if (!habitId || !userId) {
+            if (!habitId || !userId || !user) {
                 return res.status(400).json({ error: 'User ID and Habit ID are required' });
             }
             const habit = await habit_service_1.HabitService.getHabitById(userId, habitId);
@@ -90,12 +88,10 @@ class HabitController {
     static async updateHabit(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
             const habitId = req.params.id;
             const updates = req.body;
-            if (!habitId || !userId) {
+            if (!habitId || !userId || !user) {
                 return res.status(400).json({ error: 'User ID and Habit ID are required' });
             }
             const updatedHabit = await habit_service_1.HabitService.updateHabit(userId, habitId, updates);
@@ -113,11 +109,9 @@ class HabitController {
     static async archiveHabit(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
             const habitId = req.params.id;
-            if (!userId || !habitId) {
+            if (!userId || !habitId || !user) {
                 return res.status(400).json({ error: 'User ID and Habit ID are required' });
             }
             const archivedHabit = await habit_service_1.HabitService.archiveHabit(userId, habitId);
@@ -135,11 +129,9 @@ class HabitController {
     static async unarchiveHabit(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
             const habitId = req.params.id;
-            if (!userId || !habitId) {
+            if (!userId || !habitId || !user) {
                 return res.status(400).json({ error: 'User ID and Habit ID are required' });
             }
             const unarchivedHabit = await habit_service_1.HabitService.unarchiveHabit(userId, habitId);
@@ -157,10 +149,11 @@ class HabitController {
     static async deleteHabit(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
             const habitId = req.params.id;
+            if (!userId || !habitId || !user) {
+                return res.status(400).json({ error: 'User ID and Habit ID are required' });
+            }
             const result = await habit_service_1.HabitService.deleteHabit(userId, habitId);
             return res.status(200).json(result);
         }
@@ -176,7 +169,7 @@ class HabitController {
             const apiKey = req.body.apiKey;
             const userId = user?.userId;
             if (!userId) {
-                return res.status(400).json({ error: 'User not authenticated' });
+                return res.status(401).json({ error: 'User not authenticated' });
             }
             if (!apiKey) {
                 return res.status(400).json({ error: 'API key is required' });
@@ -223,10 +216,14 @@ class HabitController {
     static async getHabitsByCategory(req, res) {
         try {
             const user = req.user;
-            if (!user?.userId)
-                throw new Error('User not authenticated');
             const userId = user.userId;
+            if (!userId) {
+                return res.status(401).json({ error: 'User not authenticated' });
+            }
             const category = req.params.category;
+            if (!category) {
+                return res.status(400).json({ error: 'Category is required' });
+            }
             const habits = await habit_service_1.HabitService.getHabitsByCategory(userId, category);
             return res.status(200).json({ habits });
         }
@@ -267,7 +264,9 @@ class HabitController {
         catch (err) {
             console.error('Get habit count error:', err);
             const statusCode = err.statusCode || 500;
-            return res.status(statusCode).json({ error: err.message || 'Could not fetch habit count' });
+            return res
+                .status(statusCode)
+                .json({ error: err.message || 'Could not fetch habit count' });
         }
     }
     static async getArchivedHabitCount(req, res) {
@@ -303,7 +302,9 @@ class HabitController {
         catch (err) {
             console.error('Get habit by name error:', err);
             const statusCode = err.statusCode || 500;
-            return res.status(statusCode).json({ error: err.message || 'Could not fetch habit by name' });
+            return res
+                .status(statusCode)
+                .json({ error: err.message || 'Could not fetch habit by name' });
         }
     }
     static async searchHabits(req, res) {

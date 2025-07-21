@@ -42,6 +42,8 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", Date)
 ], XpTransaction.prototype, "created_at", void 0);
 exports.XpTransaction = XpTransaction = tslib_1.__decorate([
-    (0, typeorm_1.Entity)('xp_transactions')
+    (0, typeorm_1.Entity)('xp_transactions'),
+    (0, typeorm_1.Index)('IDX_XPTRANSACTION_USER', ['user']),
+    (0, typeorm_1.Index)('IDX_XPTRANSACTION_REFERENCE', ['reference_id'])
 ], XpTransaction);
 //# sourceMappingURL=XPTransaction.js.map

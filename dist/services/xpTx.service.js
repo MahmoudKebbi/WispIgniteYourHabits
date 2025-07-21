@@ -6,6 +6,7 @@ const XPTransaction_1 = require("../models/XPTransaction");
 const User_1 = require("../models/User");
 const typeorm_1 = require("typeorm");
 const errorHandler_1 = require("../utils/errorHandler");
+const userLevel_service_1 = require("./userLevel.service");
 class XpTransactionService {
     static async getBalance(userId) {
         const repo = db_1.AppDataSource.getRepository(XPTransaction_1.XpTransaction);
@@ -48,6 +49,7 @@ class XpTransactionService {
             reason,
             reference_id: referenceId,
         });
+        await userLevel_service_1.UserLevelService.addXp(userId, amount);
         return await repo.save(xp);
     }
     static async spendXP(userId, amount, reason, referenceId) {
