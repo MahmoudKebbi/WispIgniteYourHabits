@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes';
 import healthRoutes from './routes/health.routes';
 import habitRoutes from './routes/habits.routes';
 import coinxpRoutes from './routes/coinXp.routes';
+import userLevelRoutes from './routes/userLevel.routes';
 
 const app = express();
 
@@ -26,6 +27,9 @@ console.log('Habit routes mounted on /api/habits');
 
 app.use('/api/wallet', coinxpRoutes);
 console.log('Coin and XP routes mounted on /api/wallet');
+
+app.use('/api/user-level', userLevelRoutes);
+console.log('User level routes mounted on /api/user-level');
 
 app.use((_, res) => res.status(404).json({ message: 'Not found' }));
 

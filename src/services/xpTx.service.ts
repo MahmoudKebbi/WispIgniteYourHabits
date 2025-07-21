@@ -3,6 +3,7 @@ import { XpTransaction } from '../models/XPTransaction';
 import { User } from '../models/User';
 import { Between } from 'typeorm';
 import { createError } from '../utils/errorHandler';
+import { UserLevelService } from './userLevel.service';
 
 export class XpTransactionService {
    static async getBalance(userId: string) {
@@ -53,6 +54,7 @@ export class XpTransactionService {
          reason,
          reference_id: referenceId,
       });
+      await UserLevelService.addXp(userId, amount);
 
       return await repo.save(xp);
    }
