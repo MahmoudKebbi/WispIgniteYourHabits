@@ -6,7 +6,7 @@ import { CoinTransaction } from '../models/CoinTransaction';
 import { XpTransaction } from '../models/XPTransaction';
 import { Source } from '../models/Source';
 import { ILike } from 'typeorm';
-import { createError } from '../utils/errorHandler'; // Assuming you have a utility for error handling
+import { createError } from '../utils/errorHandler'; 
 
 const XP_REWARDS_BY_DIFFICULTY: Record<Difficulty, number> = {
    very_easy: 5,
@@ -289,12 +289,16 @@ export class HabitService {
          user: { id: userId },
          amount: habit.coin_reward,
          reason: `Habit check-in: ${habit.name}`,
+         reference_id: habitEvent.id,
+         reference_type: 'habit_checkin',
       });
 
       const xpTransaction = xpRepo.create({
          user: { id: userId },
          amount: habit.xp_reward,
          reason: `Habit check-in: ${habit.name}`,
+         reference_id: habitEvent.id,
+         reference_type: 'habit_checkin'
       });
 
       await eventRepo.save(habitEvent);

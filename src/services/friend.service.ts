@@ -36,13 +36,15 @@ export class FriendService {
             senderId,
             'friend_request_sent',
             `You sent a friend request to ${receiver.display_name}`,
-            request.id
+            request.id,
+            'friend_request'
          );
          NotificationService.sendNotification(
             receiverId,
             'friend_request_received',
             `You received a friend request from ${sender.display_name}`,
-            request.id
+            request.id,
+            'friend_request'
          );
          return request;
       } catch (err: any) {

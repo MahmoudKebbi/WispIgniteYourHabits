@@ -1,0 +1,16 @@
+export type ReferenceType =
+   | 'quest'
+   | 'habit'
+   | 'friend_request'
+   | 'notification'
+   | 'other'
+   | 'system'
+   | 'transaction'
+   | 'achievement'
+   | 'event'
+   | 'challenge'
+   | 'habit_checkin'
+   | 'habit_reminder'
+   | 'quest_update'
+   | 'coin_transaction'
+   | 'xp_transaction';

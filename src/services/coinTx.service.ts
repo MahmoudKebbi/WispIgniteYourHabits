@@ -3,6 +3,7 @@ import { CoinTransaction } from '../models/CoinTransaction';
 import { User } from '../models/User';
 import { Between } from 'typeorm';
 import { createError } from '../utils/errorHandler';
+import { ReferenceType } from '../types/referenceTypes';
 
 export class CoinTransactionService {
    static async getBalance(userId: string): Promise<number> {
@@ -36,7 +37,13 @@ export class CoinTransactionService {
       });
    }
 
-   static async addCoins(userId: string, amount: number, reason: string, referenceId?: string) {
+   static async addCoins(
+      userId: string,
+      amount: number,
+      reason: string,
+      referenceId?: string,
+      reference_type?: ReferenceType
+   ) {
       const repo = AppDataSource.getRepository(CoinTransaction);
       const userRepo = AppDataSource.getRepository(User);
 
@@ -52,6 +59,7 @@ export class CoinTransactionService {
          amount,
          reason,
          reference_id: referenceId,
+         reference_type,
       });
 
       return await repo.save(tx);

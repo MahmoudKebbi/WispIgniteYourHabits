@@ -2,13 +2,15 @@ import { AppDataSource } from '../repositories/db';
 import { Notification, NotificationType } from '../models/Notification';
 import { User } from '../models/User';
 import { createError } from '../utils/errorHandler';
+import { ReferenceType } from '../types/referenceTypes';
 
 export class NotificationService {
    static async sendNotification(
       userId: string,
       type: NotificationType,
       message: string,
-      referenceId?: string
+      referenceId?: string,
+      referenceType?: ReferenceType
    ) {
       const userRepo = AppDataSource.getRepository(User);
       const notificationRepo = AppDataSource.getRepository(Notification);

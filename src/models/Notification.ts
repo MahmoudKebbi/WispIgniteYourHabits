@@ -8,8 +8,14 @@ import {
    Index,
 } from 'typeorm';
 import { User } from './User';
+import { ReferenceType } from '../types/referenceTypes';
 
-export type NotificationType = 'friend_request_sent' | 'friend_request_received' | 'quest_update' | 'habit_reminder' | 'system';
+export type NotificationType =
+   | 'friend_request_sent'
+   | 'friend_request_received'
+   | 'quest_update'
+   | 'habit_reminder'
+   | 'system';
 
 @Entity('notifications')
 @Index('IDX_NOTIFICATION_USER', ['user'])
@@ -41,6 +47,9 @@ export class Notification {
 
    @Column({ type: 'uuid', nullable: true })
    reference_id?: string;
+
+   @Column({ type: 'text', nullable: true })
+   reference_type?: ReferenceType;
 
    @CreateDateColumn({ type: 'timestamp with time zone' })
    created_at: Date;

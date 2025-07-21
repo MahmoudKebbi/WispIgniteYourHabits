@@ -8,6 +8,7 @@ import {
    Index,
 } from 'typeorm';
 import { User } from './User';
+import { ReferenceType } from '../types/referenceTypes';
 
 @Entity('xp_transactions')
 @Index('IDX_XPTRANSACTION_USER', ['user'])
@@ -31,6 +32,9 @@ export class XpTransaction {
 
    @Column({ type: 'uuid', nullable: true })
    reference_id?: string;
+
+   @Column({ type: 'text', nullable: true })
+   reference_type?: ReferenceType;
 
    @CreateDateColumn({ type: 'timestamp with time zone' })
    created_at: Date;
