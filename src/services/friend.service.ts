@@ -3,6 +3,7 @@ import { Friend } from '../models/Friend';
 import { FriendRequest } from '../models/FriendRequest';
 import { User } from '../models/User';
 import { createError } from '../utils/errorHandler';
+import { NotificationService } from '../services/notification.service';
 
 export class FriendService {
    static async sendFriendRequest(senderId: string, receiverId: string) {
@@ -12,9 +13,10 @@ export class FriendService {
 
          const requestRepo = AppDataSource.getRepository(FriendRequest);
          const userRepo = AppDataSource.getRepository(User);
-
+         const sender = await userRepo.findOneBy({ id: senderId });
          const receiver = await userRepo.findOneBy({ id: receiverId });
          if (!receiver) throw createError('Receiver not found', 404);
+         if (!sender) throw createError('Sender not found', 404);
 
          const existingRequest = await requestRepo.findOne({
             where: [
@@ -30,6 +32,18 @@ export class FriendService {
             status: 'pending',
          });
          await requestRepo.save(request);
+         NotificationService.sendNotification(
+            senderId,
+            'friend_request_sent',
+            `You sent a friend request to ${receiver.display_name}`,
+            request.id
+         );
+         NotificationService.sendNotification(
+            receiverId,
+            'friend_request_received',
+            `You received a friend request from ${sender.display_name}`,
+            request.id
+         );
          return request;
       } catch (err: any) {
          throw err.statusCode ? err : createError('Failed to send friend request', 500);

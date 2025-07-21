@@ -6,6 +6,7 @@ const Friend_1 = require("../models/Friend");
 const FriendRequest_1 = require("../models/FriendRequest");
 const User_1 = require("../models/User");
 const errorHandler_1 = require("../utils/errorHandler");
+const notification_service_1 = require("../services/notification.service");
 class FriendService {
     static async sendFriendRequest(senderId, receiverId) {
         try {
@@ -13,9 +14,12 @@ class FriendService {
                 throw (0, errorHandler_1.createError)('You cannot send a request to yourself', 400);
             const requestRepo = db_1.AppDataSource.getRepository(FriendRequest_1.FriendRequest);
             const userRepo = db_1.AppDataSource.getRepository(User_1.User);
+            const sender = await userRepo.findOneBy({ id: senderId });
             const receiver = await userRepo.findOneBy({ id: receiverId });
             if (!receiver)
                 throw (0, errorHandler_1.createError)('Receiver not found', 404);
+            if (!sender)
+                throw (0, errorHandler_1.createError)('Sender not found', 404);
             const existingRequest = await requestRepo.findOne({
                 where: [
                     { sender: { id: senderId }, receiver: { id: receiverId } },
@@ -30,6 +34,8 @@ class FriendService {
                 status: 'pending',
             });
             await requestRepo.save(request);
+            notification_service_1.NotificationService.sendNotification(senderId, 'friend_request_sent', `You sent a friend request to ${receiver.display_name}`, request.id);
+            notification_service_1.NotificationService.sendNotification(receiverId, 'friend_request_received', `You received a friend request from ${sender.display_name}`, request.id);
             return request;
         }
         catch (err) {
