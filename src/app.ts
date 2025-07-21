@@ -7,6 +7,8 @@ import habitRoutes from './routes/habits.routes';
 import coinxpRoutes from './routes/coinXp.routes';
 import userLevelRoutes from './routes/userLevel.routes';
 import FriendRoutes from './routes/friend.routes';
+import QuestRoutes from './routes/quest.routes';
+import NotificatioRoutes from './routes/notification.routes';
 
 const app = express();
 
@@ -34,6 +36,12 @@ console.log('User level routes mounted on /api/user-level');
 
 app.use('/api/friends', FriendRoutes);
 console.log('Friend routes mounted on /api/friends');
+
+app.use('/api/quests', QuestRoutes);
+console.log('Quest routes mounted on /api/quests');
+
+app.use('/api/notifications', NotificatioRoutes);
+console.log('Notification routes mounted on /api/notifications');
 
 app.use((_, res) => res.status(404).json({ message: 'Not found' }));
 
